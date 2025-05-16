@@ -1,0 +1,90 @@
+service: serverless-lab
+frameworkVersion: "3"
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+
+plugins:
+  - serverless-dynamodb
+  - serverless-offline
+
+custom:
+  serverless-dynamodb:
+    stages:
+      - dev
+    start:
+      port: 8000
+      region: eu-west-1
+      inMemory: true
+      migrate: true
+
+resources:
+  Resources:
+    usersTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: Users
+        AttributeDefinitions:
+          - AttributeName: userId
+            AttributeType: S
+          - AttributeName: email
+            AttributeType: S
+        KeySchema:
+          - AttributeName: userId
+            KeyType: HASH
+        GlobalSecondaryIndexes:
+          - IndexName: email-index
+            KeySchema:
+              - AttributeName: email
+                KeyType: HASH
+            Projection:
+              ProjectionType: ALL
+    organizationsTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: Organizations
+        AttributeDefinitions:
+          - AttributeName: orgId
+            AttributeType: S
+          - AttributeName: name
+            AttributeType: S
+        KeySchema:
+          - AttributeName: orgId
+            KeyType: HASH
+        GlobalSecondaryIndexes:
+          - IndexName: name-index
+            KeySchema:
+              - AttributeName: name
+                KeyType: HASH
+            Projection:
+              ProjectionType: ALL
+
+functions:
+  createOrganization:
+    handler: handler.createOrganization
+    events:
+      - http:
+          path: organizations
+          method: post
+
+  createUser:
+    handler: handler.createUser
+    events:
+      - http:
+          path: organizations/{orgId}/users
+          method: post
+
+  updateOrganization:
+    handler: handler.updateOrganization
+    events:
+      - http:
+          path: organizations
+          method: put
+
+  updateUser:
+    handler: handler.updateUser
+    events:
+      - http:
+          path: organizations/{orgId}/users
+          method: put
