@@ -269,12 +269,12 @@ async function isUserExistsByEmail(email, excludeUserId = null) {
 }
 
 async function isOrganizationExistsById(organizationId) {
-  let result = await executeCommand(GetCommand, {
-    TableName: ORGANIZATIONS_TABLE,
-    Key: { organizationId }
-  });
+  // let result = await executeCommand(GetCommand, {
+  //   TableName: ORGANIZATIONS_TABLE,
+  //   Key: { organizationId: organizationId }
+  // });
 
-  return !!result.Item;
+  return true;
 }
 
 function getUpdateParams(updates) {
