@@ -10,11 +10,13 @@
   "description": "",
   "dependencies": {
     "aws-sdk": "^2.1692.0",
+    "serverless-offline-sqs": "^8.0.0",
     "uuid": "^11.1.0",
     "yup": "^1.6.1"
   },
   "devDependencies": {
     "serverless-dynamodb": "^0.2.56",
-    "serverless-offline": "^13.9.0"
+    "serverless-offline": "^13.9.0",
+    "serverless-webpack": "^5.15.1"
   }
 }
