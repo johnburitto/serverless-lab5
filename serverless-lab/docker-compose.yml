@@ -1,0 +1,9 @@
+version: '3.8'
+
+services:
+  elasticmq:
+    image: softwaremill/elasticmq:latest
+    container_name: elasticmq
+    ports:
+      - "9324:9324"   # REST interface (SQS-compatible)
+      - "9325:9325"   # Web UI (if using custom UI configuration)

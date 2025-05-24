@@ -54,12 +54,12 @@ resources:
       Properties:
         TableName: Organizations
         AttributeDefinitions:
-          - AttributeName: orgId
+          - AttributeName: organizationId
             AttributeType: S
           - AttributeName: name
             AttributeType: S
         KeySchema:
-          - AttributeName: orgId
+          - AttributeName: organizationId
             KeyType: HASH
         GlobalSecondaryIndexes:
           - IndexName: name-index
